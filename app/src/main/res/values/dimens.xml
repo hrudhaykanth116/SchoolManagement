@@ -1,0 +1,8 @@
+<resources>
+
+    <dimen name="default_margin">@dimen/_8sdp</dimen>
+
+    <!-- Exam -->
+    <dimen name="questions_screen_text_size">@dimen/_16ssp</dimen>
+
+</resources>

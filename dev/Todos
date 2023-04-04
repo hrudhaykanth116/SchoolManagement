@@ -1,0 +1,6 @@
+
+Implement all question types.
+Implement filter feature.
+Implement answer scenerios.
+
+1. Parse the whole json at once into ui state instead of parsing each question on demand.

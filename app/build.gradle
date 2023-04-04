@@ -1,0 +1,196 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'com.google.dagger.hilt.android'
+
+android {
+    namespace 'com.hrudhaykanth116.schoolmanagement'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.hrudhaykanth116.schoolmanagement"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    // Allow references to generated code
+    kapt {
+        correctErrorTypes true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.2"
+    }
+
+    buildFeatures {
+        compose true
+        dataBinding = true
+        viewBinding true
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        }
+
+    }
+}
+
+dependencies {
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.annotation:annotation:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    // Kotlin
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0"
+    implementation 'androidx.core:core-ktx:1.9.0'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    def composeBom = platform('androidx.compose:compose-bom:2023.03.00')
+    implementation composeBom
+    androidTestImplementation composeBom
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+    implementation 'androidx.compose.foundation:foundation'
+    implementation 'androidx.compose.material:material'
+
+//    implementation 'androidx.activity:activity-compose'
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose'
+//    implementation "androidx.lifecycle:lifecycle-runtime-compose"
+//    implementation 'androidx.compose.runtime:runtime-livedata'
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose'
+//    implementation 'androidx.hilt:hilt-navigation-compose'
+
+//    implementation 'androidx.compose.ui:ui:1.4.0'
+//    // Tooling support (Previews, etc.)
+//    implementation 'androidx.compose.ui:ui-tooling:1.4.0'
+//    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+//    implementation 'androidx.compose.foundation:foundation:1.4.0'
+//    // Material Design
+//    implementation 'androidx.compose.material:material:1.4.0'
+//    // Material design icons
+//    implementation 'androidx.compose.material:material-icons-core:1.4.0'
+//    implementation 'androidx.compose.material:material-icons-extended:1.4.0'
+//    // Integration with activities
+//    implementation 'androidx.activity:activity-compose:1.7.0'
+//    // Integration with ViewModels
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
+//    // Integration with lifecycle
+//    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.1"
+//    // Integration with observables
+//    implementation 'androidx.compose.runtime:runtime-livedata:1.4.0'
+//    implementation 'androidx.compose.runtime:runtime-rxjava2:1.4.0'
+
+    // Hilt
+    implementation('androidx.hilt:hilt-navigation-compose:1.0.0')
+
+    // UI Tests
+//    androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.1.1'
+
+    // When using a MDC theme
+    // implementation 'com.google.android.material:compose-theme-adapter:1.1.14'
+
+    // When using a AppCompat theme
+    // implementation 'com.google.accompanist:accompanist-appcompat-theme:0.16.0'
+
+    // Life cycle
+    def lifecycle_version = "2.5.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+    // Saved state module for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
+    // Annotation processor
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_version"
+
+    // Navigation component
+    def nav_version = "2.5.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
+
+    // Coil
+    implementation "io.coil-kt:coil:2.3.0"
+    implementation "io.coil-kt:coil-compose:2.3.0"
+
+    // Room
+    def room_version = "2.4.2"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation "androidx.room:room-ktx:$room_version"
+
+    //kot-pref for local shared preferences data.
+    def kotpref_version = "2.13.1"
+    implementation "com.chibatching.kotpref:enum-support:$kotpref_version"
+    implementation "com.chibatching.kotpref:kotpref:$kotpref_version"
+    implementation "com.chibatching.kotpref:initializer:$kotpref_version"
+    implementation "com.chibatching.kotpref:gson-support:$kotpref_version"
+    implementation "com.chibatching.kotpref:livedata-support:$kotpref_version"
+
+    // Network
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    // Moshi
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation "com.squareup.moshi:moshi:1.12.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.12.0"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.12.0"
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
+    // Material design(https://maven.google.com/web/index.html#com.google.android.material:material)
+    implementation "com.google.android.material:material:1.6.1"
+
+    //intuit sdp(scalable dp) and ssp(scalable sp)
+    def intuit_version = "1.0.6"
+    implementation "com.intuit.sdp:sdp-android:$intuit_version"
+    implementation "com.intuit.ssp:ssp-android:$intuit_version"
+
+    // Glide
+    def glide_version = "4.12.0"
+    implementation "com.github.bumptech.glide:glide:4.12.0"
+    kapt "com.github.bumptech.glide:compiler:4.12.0"
+
+    // https://github.com/jianzhongli/MathView
+//    implementation 'io.github.kexanie.library:MathView:0.0.6'
+//    implementation 'io.github.sidvenu.mathjaxview:mathjaxview:1.0.7'
+//    implementation 'com.github.Nishant-Pathak:MathView:v1.1'
+    implementation 'com.github.quantaDot:MathRenderer:1.0.3'
+}
