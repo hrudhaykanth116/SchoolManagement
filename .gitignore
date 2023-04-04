@@ -90,3 +90,4 @@ lint/tmp/
 # confidential files
 /app/google-services.json
 /apikeys.properties
+/app/src/main/java/com/hrudhaykanth116/schoolmanagement/secure/
