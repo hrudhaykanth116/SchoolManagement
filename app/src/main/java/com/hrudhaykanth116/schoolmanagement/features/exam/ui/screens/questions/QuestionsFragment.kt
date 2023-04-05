@@ -5,12 +5,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.hrudhaykanth116.schoolmanagement.R
 import com.hrudhaykanth116.schoolmanagement.common.udf.UDFFragment
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerData
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.QuestionOptionsContainer
 import dagger.hilt.android.AndroidEntryPoint
 import com.hrudhaykanth116.schoolmanagement.databinding.FragmentQuestionsBinding as Binding
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionsScreenEffect as Effect
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionsScreenEvent as Event
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionsScreenUIState as State
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.ExamUIState as State
 
 @AndroidEntryPoint
 class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
@@ -39,20 +40,37 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
 
         // val actualFromState = "\\(${state.question}\\)"
 
-        binding.questionTitle.text = state.questionNumber.toString()
-        binding.questionContent.text = state.question
-        binding.answerTitle.text = state.answerTitle?.getText(requireContext())
+        // TODO: Handle empty questions/error/loading case using loading, loaded, error states
 
-        // Added previous button for testing purpose
-        binding.prevButton.isVisible = false
 
-        binding.answerOptionsContainer.apply {
-            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-            setContent {
-                QuestionOptionsContainer(
-                    optionState = state.questionOptions
-                )
+        binding.progressBar.isVisible = state.isLoading
+
+        if (!state.isLoading) {
+            val questionUIState = state.currentQuestionUIState
+            binding.questionTitle.text = questionUIState?.questionNumber?.toString() ?: ""
+            binding.questionContent.text = questionUIState?.question
+            binding.answerTitle.text = questionUIState?.answerTitle?.getText(requireContext())
+
+            // Added previous button for testing purpose
+            binding.prevButton.isVisible = false
+
+            binding.answerOptionsContainer.apply {
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                setContent {
+                    QuestionOptionsContainer(
+                        optionState = state.currentQuestionUIState?.questionOptions!!,
+                        onAnswered = { answer ->
+                            onAnswered(answer)
+                        },
+                        answerData = state.currentQuestionUIState.answerData
+                    )
+                }
             }
+
         }
+    }
+
+    private fun onAnswered(answerData: AnswerData){
+        sendEvent(event = Event.Answered(answerData))
     }
 }

@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="primary_text_color">#000000</color>
+    <color name="progress_bar_color">#0F61E8</color>
 
 </resources>

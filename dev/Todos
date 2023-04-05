@@ -1,4 +1,6 @@
 
+Assumed happy path in some cases with null assertion.
+
 Implement all question types.
 Implement filter feature.
 Implement answer scenerios.

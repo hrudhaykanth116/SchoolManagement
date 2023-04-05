@@ -1,6 +1,7 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerData
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionOptions
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -25,7 +26,15 @@ class ParseMultipleChoiceData @Inject constructor() {
             }
 
             val option: QuestionOptions.MultipleChoices.Option =
-                QuestionOptions.MultipleChoices.Option("$index", answerOption ?: "")
+                QuestionOptions.MultipleChoices.Option(
+                    "$index", answerOption ?: "",
+                    // Better handle null cases if.
+                    AnswerData(
+                        optionId = questionOption.optionId ?: -1,
+                        description = questionOption.description.orEmpty(),
+                        formulae = questionOption.optionFormula.orEmpty(),
+                    )
+                )
 
             optionsList.add(option)
         }
