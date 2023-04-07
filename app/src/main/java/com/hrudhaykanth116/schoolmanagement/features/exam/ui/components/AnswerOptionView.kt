@@ -3,7 +3,6 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,12 +12,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerData
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionOptions
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerType
 
 @Composable
 fun AnswerOptionView(
     modifier: Modifier = Modifier,
-    option: QuestionOptions.MultipleChoices.Option,
+    option: AnswerType.MultipleChoices.Option,
     isSelected: Boolean,
     onAnswered: (AnswerData) -> Unit
 ) {

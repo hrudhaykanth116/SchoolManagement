@@ -5,6 +5,7 @@ import com.hrudhaykanth116.schoolmanagement.common.data.models.UIText
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.repository.exam.IExamRepository
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.ExamUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionUIState
 import javax.inject.Inject
 
 class GetExamUIStateUseCase @Inject constructor(
@@ -16,7 +17,7 @@ class GetExamUIStateUseCase @Inject constructor(
     //
     // private val examUIState: ExamUIState
 
-    suspend operator fun invoke(currentExamUIState: ExamUIState): ExamUIState {
+    suspend operator fun invoke(currentExamUIState:  ExamUIState): ExamUIState {
         // examData?.let { dataResult ->
         //     // Do not make network/db call if data is already there because the
         //     // complete exam data would be fetched only once.
@@ -34,7 +35,8 @@ class GetExamUIStateUseCase @Inject constructor(
                 val examData: GetExamDataResponse.Result? = getExamDataResult.data.result!!
 
                 if (examData != null) {
-                    return parseExamDtoUseCase(examData)
+                    val examUIState = parseExamDtoUseCase(examData)
+                    return examUIState
                 } else {
                     return currentExamUIState.copy(
                         errorMessage = UIText.Text("Empty data")

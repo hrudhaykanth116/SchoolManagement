@@ -9,6 +9,24 @@
         android:id="@+id/questionsFragment"
         android:name="com.hrudhaykanth116.schoolmanagement.features.exam.ui.screens.questions.QuestionsFragment"
         android:label="QuestionsFragment"
-        tools:layout="@layout/fragment_questions"
-        />
+        tools:layout="@layout/fragment_questions">
+
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/filterBottomSheetFragment" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/filterBottomSheetFragment"
+        android:name="com.hrudhaykanth116.schoolmanagement.features.exam.ui.bottomsheet.FilterBottomSheetFragment"
+        android:label="FilterBottomSheetFragment">
+
+        <argument
+            android:name="filterOptionState"
+            app:argType="com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOptionsState" />
+
+    </dialog>
+
+
 </navigation>

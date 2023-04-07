@@ -1,10 +1,14 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.models
 
-sealed interface QuestionOptions {
+import kotlinx.parcelize.Parcelize
+
+sealed class AnswerType(
+    val filterName: String,
+) {
 
     data class MultipleChoices(
         val optionsList: List<Option>
-    ): QuestionOptions{
+    ): AnswerType("Multiple choice"){
 
         data class Option(
             val index: String,
@@ -13,5 +17,7 @@ sealed interface QuestionOptions {
         )
 
     }
+
+    object Unknown: AnswerType("Unknown")
 
 }

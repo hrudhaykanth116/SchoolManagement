@@ -9,5 +9,6 @@ data class QuestionUIState(
     val answerTitle: UIText? = null,
     val errorMessage: UIText? = null,
     val answerData: AnswerData? = null, // No answer given
-    val questionOptions: QuestionOptions? = null,
+    val answerType: AnswerType = AnswerType.Unknown,
+    val subject: String? = null,
 )

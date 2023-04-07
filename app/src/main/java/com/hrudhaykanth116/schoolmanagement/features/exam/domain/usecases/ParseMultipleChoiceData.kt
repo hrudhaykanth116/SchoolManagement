@@ -2,7 +2,7 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerData
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionOptions
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerType
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,8 +13,8 @@ class ParseMultipleChoiceData @Inject constructor() {
      * Extracts options list from given [GetExamDataResponse.Result.QuestionDetail] that can
      * be rendered on the UI
      */
-    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): QuestionOptions.MultipleChoices {
-        val optionsList = mutableListOf<QuestionOptions.MultipleChoices.Option>()
+    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): AnswerType.MultipleChoices {
+        val optionsList = mutableListOf<AnswerType.MultipleChoices.Option>()
 
         questionDetail.questionOptions?.forEachIndexed { index, questionOption ->
 
@@ -25,8 +25,8 @@ class ParseMultipleChoiceData @Inject constructor() {
                 "\\[${questionOption.optionFormula}\\]"
             }
 
-            val option: QuestionOptions.MultipleChoices.Option =
-                QuestionOptions.MultipleChoices.Option(
+            val option: AnswerType.MultipleChoices.Option =
+                AnswerType.MultipleChoices.Option(
                     "$index", answerOption ?: "",
                     // Better handle null cases if.
                     AnswerData(
@@ -39,7 +39,7 @@ class ParseMultipleChoiceData @Inject constructor() {
             optionsList.add(option)
         }
 
-        return QuestionOptions.MultipleChoices(optionsList)
+        return AnswerType.MultipleChoices(optionsList)
     }
 
 }

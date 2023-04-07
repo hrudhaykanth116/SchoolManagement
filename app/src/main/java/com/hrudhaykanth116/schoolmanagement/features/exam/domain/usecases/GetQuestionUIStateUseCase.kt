@@ -3,6 +3,7 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 import com.hrudhaykanth116.schoolmanagement.R
 import com.hrudhaykanth116.schoolmanagement.common.data.models.UIText
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerType
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionUIState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,21 +34,24 @@ class GetQuestionUIStateUseCase @Inject constructor(
         }
 
         when (questionDetail.questionType) {
+            // TODO: Do one time operation for common fields instead of repeating in each when block.
             "1" -> {
                 val optionState = parseMultipleChoiceData(questionDetail)
                 return@withContext QuestionUIState(
                     question = question,
-                    questionOptions = optionState,
+                    answerType = optionState,
                     questionTitle = UIText.StringRes(R.string.multiples_choices),
-                    answerTitle = UIText.StringRes(R.string.choose_your_answer)
+                    answerTitle = UIText.StringRes(R.string.choose_your_answer),
+                    subject = questionDetail.subjectName
                 )
             }
             else -> {
                 return@withContext QuestionUIState(
                     question = question,
-                    questionOptions = null,
+                    answerType = AnswerType.Unknown,
                     questionTitle = UIText.StringRes(R.string.question_),
-                    answerTitle = UIText.StringRes(R.string.answer_)
+                    answerTitle = UIText.StringRes(R.string.answer_),
+                    subject = questionDetail.subjectName
                 )
             }
         }

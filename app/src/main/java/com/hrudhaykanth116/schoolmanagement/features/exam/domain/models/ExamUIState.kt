@@ -6,21 +6,19 @@ import com.hrudhaykanth116.schoolmanagement.common.data.models.UIText
 data class ExamUIState(
     val currentQuestionNumber: Int = 1,
     val currentQuestionUIState: QuestionUIState? = null,
-    val questionsList: List<QuestionUIState>? = null,
-    val filterList: List<FilterOption>? = null,
+    val questionsList: List<QuestionUIState> = listOf(),
+    val filteredQuestionList: List<QuestionUIState> = listOf(),
+    val filterOptionsState: FilterOptionsState? = null,
     val errorMessage: UIText? = null,
     val isLoading: Boolean = true,
+    val isInFilterMode: Boolean = false
 )
 
 // Handy extension function to get the question mapped to a question number.
 fun List<QuestionUIState>?.getQuestion(questionNumber: Int): QuestionUIState? {
-    return this?.firstOrNull{
-        it.questionNumber == questionNumber
-    }
+    return this?.getOrNull(questionNumber - 1)
+    // return this?.firstOrNull{
+    //     it.questionNumber == questionNumber
+    // }
 }
 
-// TODO: Move to other class
-data class FilterOption(
-    val name: String,
-    val count: String,
-)
