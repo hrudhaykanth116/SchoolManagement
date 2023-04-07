@@ -5,13 +5,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_rounded_top">
 
-        <View
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/header"
-            android:background="#264EDD"
+            android:gravity="center"
+            android:text="Select course"
+            android:background="#0B4DF4"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/_15ssp"
+            android:paddingVertical="@dimen/_20sdp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_80sdp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             />
 
@@ -34,6 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Clear"
+            android:textColor="#ff0000"
+            android:backgroundTint="#ffffff"
             android:layout_marginEnd="@dimen/default_margin"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,6 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Apply"
+            android:textColor="#ffffff"
+            android:backgroundTint="#2673F8"
             android:layout_marginStart="@dimen/default_margin"
             app:layout_constraintStart_toEndOf="@id/clearButton"
             app:layout_constraintEnd_toEndOf="parent"

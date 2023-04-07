@@ -5,7 +5,7 @@ sealed interface QuestionsScreenEvent{
     object Prev: QuestionsScreenEvent
     object FilterIconClicked: QuestionsScreenEvent
     data class Filter(val filterOptionsState: FilterOptionsState?): QuestionsScreenEvent
-    data class Answered(
-        val answerData: AnswerData
+    data class AnswerStateChanged(
+        val answerUIState: AnswerUIState
     ): QuestionsScreenEvent
 }

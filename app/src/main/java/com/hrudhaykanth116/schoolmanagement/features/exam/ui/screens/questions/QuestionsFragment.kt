@@ -9,12 +9,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.fragment.findNavController
 import com.hrudhaykanth116.schoolmanagement.R
+import androidx.compose.runtime.*
 import com.hrudhaykanth116.schoolmanagement.common.udf.UDFFragment
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerData
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOption
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOptionsState
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.bottomsheet.FilterBottomSheetFragment.Companion.KEY_FILTER_STATE
-import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.QuestionOptionsContainer
+import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.QuestionContainer
 import dagger.hilt.android.AndroidEntryPoint
 import com.hrudhaykanth116.schoolmanagement.databinding.FragmentQuestionsBinding as Binding
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionsScreenEffect as Effect
@@ -25,6 +25,7 @@ import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.ExamUISt
 class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
     R.layout.fragment_questions
 ) {
+
     override val viewModel: QuestionsViewModel by viewModels()
 
     override fun initViews() {
@@ -33,8 +34,11 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setObserverForFilterFragment()
+    }
+
+    override fun onCreateViewInitialization() {
+        initAnswerOptionsContainer()
     }
 
     private fun setObserverForFilterFragment() {
@@ -68,13 +72,6 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
     }
 
     private fun setClickListeners() {
-        binding.nextButton.setOnClickListener {
-            sendEvent(Event.Next)
-        }
-        binding.prevButton.setOnClickListener {
-            sendEvent(Event.Prev)
-        }
-
         binding.filterIcon.setOnClickListener {
             sendEvent(Event.FilterIconClicked)
         }
@@ -92,30 +89,17 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
         binding.progressBar.isVisible = state.isLoading
 
         if (!state.isLoading) {
+
+            // TODO: Implement recycler view
+            val questionNumbers = 1..state.questionsToDisplayList.size
+
             val questionUIState = state.currentQuestionUIState
-            binding.questionTitle.text = state.currentQuestionNumber.toString()
-            binding.questionContent.text = questionUIState?.question
-            binding.answerTitle.text = questionUIState?.answerTitle?.getText(requireContext())
-
-            // Added previous button for testing purpose
-            binding.prevButton.isVisible = true
-
-            binding.answerOptionsContainer.apply {
-                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                setContent {
-                    QuestionOptionsContainer(
-                        optionState = state.currentQuestionUIState?.answerType!!,
-                        onAnswered = { answer ->
-                            onAnswered(answer)
-                        },
-                        answerData = state.currentQuestionUIState.answerData
-                    )
-                }
-            }
-
+            binding.questionTitle.text = "${state.currentQuestionNumber}/${state.questionsToDisplayList.size}. ${state.currentQuestionUIState.questionTitle?.getText(requireContext())}"
+            binding.questionContent.text = questionUIState.question
+            binding.answerTitle.text = questionUIState.answerTitle?.getText(requireContext())
         }
 
-        if(state.isInFilterMode){
+        if (state.isInFilterMode) {
             val action = QuestionsFragmentDirections.actionLoginFragmentToSignUpFragment(
                 // TODO: Assuming non null assertion
                 state.filterOptionsState!!
@@ -125,7 +109,29 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
 
     }
 
-    private fun onAnswered(answerData: AnswerData){
-        sendEvent(event = Event.Answered(answerData))
+    private fun initAnswerOptionsContainer() {
+        binding.answerOptionsContainer.apply {
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+            setContent {
+
+                val state = viewModel.stateFlow.collectAsState()
+
+                val answerUIState: AnswerUIState = state.value.currentQuestionUIState.answerUIState
+
+                // var answerUIState: AnswerUIState by remember {
+                //     mutableStateOf(state.currentQuestionUIState.answerUIState)
+                // }
+
+                QuestionContainer(
+                    answersInitialUIState = answerUIState,
+                    onNextClicked = {
+                        sendEvent(Event.Next)
+                    },
+                    onAnswered = { newAnswerUIState: AnswerUIState ->
+                        sendEvent(Event.AnswerStateChanged(newAnswerUIState))
+                    }
+                )
+            }
+        }
     }
 }

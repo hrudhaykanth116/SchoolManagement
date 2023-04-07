@@ -11,17 +11,15 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerData
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerType
 
 @Composable
-fun AnswerOptionView(
+fun AnswerOptionsView(
     modifier: Modifier = Modifier,
-    option: AnswerType.MultipleChoices.Option,
-    isSelected: Boolean,
-    onAnswered: (AnswerData) -> Unit
+    isSelected: Boolean = false,
+    index: String,
+    content: String,
+    onClicked: () -> Unit
 ) {
-
 
     Row(
         // Math renderer view needs more height
@@ -30,15 +28,15 @@ fun AnswerOptionView(
             .border(width = 2.dp, color = if (isSelected) Color.Green else Color.Black)
             // .padding(8.dp)
             .clickable {
-                onAnswered(option.answerData)
+                onClicked()
             }
-            .height(50.dp),
+            .height(60.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         // Giving extra space for background circle to display properly for now.
         Spacer(modifier = Modifier.width(20.dp))
         Text(
-            text = option.index,
+            text = index,
             modifier = Modifier
                 // .padding(start = 2.dp, end = 2.dp)
                 .drawBehind {
@@ -52,7 +50,7 @@ fun AnswerOptionView(
             color = Color.White,
         )
         Spacer(modifier = Modifier.width(16.dp))
-        MyMathComposable(modifier, option.content)
+        MyMathComposable(modifier, content)
     }
 
 }

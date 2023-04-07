@@ -23,9 +23,7 @@ class FilterBottomSheetFragment: BottomSheetDialogFragment() {
         args.filterOptionState
     }
 
-    private val resultFilterOptions: List<FilterOption> by lazy {
-        filterOptionState.filterOptionsList ?: listOf()
-    }
+    private var resultFilterOptions: List<FilterOption> = listOf()
 
     private val adapter by lazy {
         FilterOptionsAdapter{ event: FilterOptionsAdapter.ItemEvent ->
@@ -55,10 +53,30 @@ class FilterBottomSheetFragment: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // TODO: Handle outside clicked event
+
+        resultFilterOptions = filterOptionState.filterOptionsList ?: listOf()
+
         binding.optionsList.adapter = adapter
+
         adapter.submitList(
             filterOptionState.filterOptionsList
         )
+
+        binding.clearButton.setOnClickListener {
+
+            val clearedList = ArrayList(resultFilterOptions.map {
+                it.copy(
+                    isChecked = false
+                )
+            })
+
+            resultFilterOptions = clearedList
+
+            adapter.submitList(
+                resultFilterOptions
+            )
+        }
 
         binding.applyButton.setOnClickListener {
 

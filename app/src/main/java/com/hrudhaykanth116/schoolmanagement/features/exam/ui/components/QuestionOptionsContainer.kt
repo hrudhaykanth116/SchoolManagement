@@ -2,52 +2,42 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerData
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerType
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.examanswers.EasyAnswerView
 
 @Composable
 fun QuestionOptionsContainer(
-    modifier: Modifier = Modifier,
-    optionState: AnswerType,
-    answerData: AnswerData? = null,
-    onAnswered: (AnswerData) -> Unit = {}
+    optionState: AnswerUIState,
+    onAnswered: (AnswerUIState) -> Unit = {}
 ) {
 
     when (optionState) {
-        is AnswerType.MultipleChoices -> {
-            MultipleChoiceAnswers(optionState, modifier, answerData, onAnswered)
+        is AnswerUIState.MultipleChoicesUIState -> {
+            MultipleChoiceAnswers(
+                optionState = optionState,
+                onStateChanged = onAnswered
+            )
         }
-        else -> {
+        is AnswerUIState.MultipleAnswers -> {
+            MultipleAnswersOptions(
+                optionState = optionState,
+                onStateChanged = onAnswered
+            )
+        }
+        is AnswerUIState.FillInTheBlank -> {
+            FillInTheBlankAnswerView(optionState, onAnswered)
+        }
+        is AnswerUIState.ShortAnswer -> {
+            ShortAnswerView(optionState, onAnswered)
+        }
+        is AnswerUIState.TrueFalse -> {
+            TrueFalseOptions(optionState, onAnswered)
+        }
+        is AnswerUIState.Unknown -> {
             Text(text = "Answer type is unknown.")
         }
+        is AnswerUIState.Easy -> {
+            EasyAnswerView(optionState, onAnswered)
+        }
     }
-}
-
-@Preview
-@Composable
-private fun QuestionOptionsContainerPreview() {
-    QuestionOptionsContainer(
-        optionState = AnswerType.MultipleChoices(
-            listOf(
-                // QuestionOptions.MultipleChoices.Option(
-                //     "A",
-                //     "a + b = c"
-                // ),
-                // QuestionOptions.MultipleChoices.Option(
-                //     "A",
-                //     "a + b = c"
-                // ),
-                // QuestionOptions.MultipleChoices.Option(
-                //     "A",
-                //     "a + b = c"
-                // ),
-                // QuestionOptions.MultipleChoices.Option(
-                //     "A",
-                //     "a + b = c"
-                // )
-            )
-        )
-    )
 }

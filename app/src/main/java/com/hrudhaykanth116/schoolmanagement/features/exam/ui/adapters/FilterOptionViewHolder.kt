@@ -20,6 +20,7 @@ class FilterOptionViewHolder(
             eventListener.invoke(FilterOptionsAdapter.ItemEvent.CheckStateChanged(filterOption))
         }
         binding.label.text = "${filterOption.name} (${filterOption.count})"
+        binding.checkbox.isChecked = filterOption.isChecked
 
     }
 

@@ -26,6 +26,7 @@ abstract class UDFFragment<STATE, EVENT, EFFECT, BINDING : ViewDataBinding>(
     protected abstract fun initViews()
     protected abstract fun processNewState(state: STATE)
     protected abstract fun processNewEffect(effect: EFFECT)
+    protected abstract fun onCreateViewInitialization()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +36,9 @@ abstract class UDFFragment<STATE, EVENT, EFFECT, BINDING : ViewDataBinding>(
             inflater, layoutId, container, false
         )
         binding.lifecycleOwner = this
+
+        onCreateViewInitialization()
+
         return binding.root
     }
 

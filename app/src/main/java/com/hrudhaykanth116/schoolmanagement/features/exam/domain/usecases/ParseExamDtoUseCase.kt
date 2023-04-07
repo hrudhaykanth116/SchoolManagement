@@ -1,10 +1,7 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.ExamUIState
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOption
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOptionsState
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.*
 import javax.inject.Inject
 
 class ParseExamDtoUseCase @Inject constructor(
@@ -42,11 +39,27 @@ class ParseExamDtoUseCase @Inject constructor(
         }
 
         // TODO: We may use already extracted grouped list here. Need to handle Showing next question
-        val group: Map<String, List<QuestionUIState>> = questionsUIState.groupBy {
+        val subjectWiseGroup: Map<String, List<QuestionUIState>> = questionsUIState.groupBy {
             it.subject!!
         }
 
-        val filterOptionsList: List<FilterOption> = group.map {
+        val answerTypeWiseGroup: Map<String, List<String>> = questionsUIState.groupBy(
+            {
+                it.answerUIState.getFilterName()
+            }
+        ) {
+            when (it.answerUIState) {
+                is AnswerUIState.FillInTheBlank -> "Fill in the blanks"
+                is AnswerUIState.MultipleAnswers -> "Multiple answers"
+                is AnswerUIState.MultipleChoicesUIState -> "Multiple choices"
+                is AnswerUIState.ShortAnswer -> "Short answer"
+                is AnswerUIState.TrueFalse -> "True False"
+                is AnswerUIState.Unknown -> "Unknown"
+                is AnswerUIState.Easy -> "Easy"
+            }
+        }
+
+        val filterOptionsList: List<FilterOption> = (subjectWiseGroup + answerTypeWiseGroup).map {
             FilterOption(
                 it.key, it.value.count()
             )
@@ -60,7 +73,7 @@ class ParseExamDtoUseCase @Inject constructor(
         return ExamUIState(
             questionsList = questionsUIState,
             // Initially filtered list would be same as the questions list. Or change this behavior in viewmodel
-            filteredQuestionList = questionsUIState,
+            questionsToDisplayList = questionsUIState,
             filterOptionsState = filterOptionsState
         )
 

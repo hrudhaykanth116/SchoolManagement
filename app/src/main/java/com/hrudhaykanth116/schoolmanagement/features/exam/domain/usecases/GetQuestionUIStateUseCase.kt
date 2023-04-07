@@ -3,8 +3,9 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 import com.hrudhaykanth116.schoolmanagement.R
 import com.hrudhaykanth116.schoolmanagement.common.data.models.UIText
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerType
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases.answerdataparsers.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -13,6 +14,11 @@ import javax.inject.Singleton
 @Singleton
 class GetQuestionUIStateUseCase @Inject constructor(
     private val parseMultipleChoiceData: ParseMultipleChoiceData,
+    private val parseFillInTheBlackData: ParseFillInTheBlackData,
+    private val parseEasyAnswersData: ParseEasyAnswersData,
+    private val parseMultipleAnswersData: ParseMultipleAnswersData,
+    private val parseTrueFalseAnswersData: ParseTrueFalseAnswersData,
+    private val parseShortAnswerData: ParseShortAnswerData,
 ) {
 
     suspend operator fun invoke(
@@ -33,28 +39,70 @@ class GetQuestionUIStateUseCase @Inject constructor(
             "NA"
         }
 
-        when (questionDetail.questionType) {
+        val questionUIState: QuestionUIState = when (questionDetail.questionType) {
             // TODO: Do one time operation for common fields instead of repeating in each when block.
             "1" -> {
                 val optionState = parseMultipleChoiceData(questionDetail)
-                return@withContext QuestionUIState(
-                    question = question,
-                    answerType = optionState,
+                QuestionUIState(
+                    answerUIState = optionState,
                     questionTitle = UIText.StringRes(R.string.multiples_choices),
                     answerTitle = UIText.StringRes(R.string.choose_your_answer),
-                    subject = questionDetail.subjectName
+                )
+            }
+            "2" -> {
+                val optionState = parseTrueFalseAnswersData(questionDetail)
+                QuestionUIState(
+                    answerUIState = optionState,
+                    questionTitle = UIText.StringRes(R.string.true_false),
+                    answerTitle = UIText.StringRes(R.string.choose_one),
+                )
+            }
+            "3" -> {
+                val optionState = parseShortAnswerData(questionDetail)
+                QuestionUIState(
+                    answerUIState = optionState,
+                    questionTitle = UIText.StringRes(R.string.short_answer),
+                    answerTitle = UIText.StringRes(R.string.enter_short_answer),
+                )
+            }
+            "4" -> {
+                val optionState = parseFillInTheBlackData(questionDetail)
+                QuestionUIState(
+                    answerUIState = optionState,
+                    questionTitle = UIText.StringRes(R.string.fill_in_the_blank),
+                    answerTitle = UIText.StringRes(R.string.enter_answer),
+                )
+            }
+            "5" -> {
+                val optionState = parseEasyAnswersData(questionDetail)
+                QuestionUIState(
+                    answerUIState = optionState,
+                    questionTitle = UIText.StringRes(R.string.easy_answer),
+                    answerTitle = UIText.StringRes(R.string.enter_the_essay),
+                )
+            }
+            "6" -> {
+                val optionState = parseMultipleAnswersData(questionDetail)
+                QuestionUIState(
+                    answerUIState = optionState,
+                    questionTitle = UIText.StringRes(R.string.multiple_answers),
+                    answerTitle = UIText.StringRes(R.string.choose_single_or_multiple_options),
                 )
             }
             else -> {
-                return@withContext QuestionUIState(
-                    question = question,
-                    answerType = AnswerType.Unknown,
+                QuestionUIState(
+                    answerUIState = AnswerUIState.Unknown(questionDetail.questionId.toString()),
                     questionTitle = UIText.StringRes(R.string.question_),
                     answerTitle = UIText.StringRes(R.string.answer_),
-                    subject = questionDetail.subjectName
                 )
             }
         }
+
+        return@withContext questionUIState.copy(
+            questionId = questionDetail.questionId?.toString(),
+            question = question,
+            subject = questionDetail.subjectName
+        )
     }
 
 }

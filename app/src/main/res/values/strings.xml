@@ -6,5 +6,15 @@
     <string name="multiples_choices">Multiple choices</string>
     <string name="question_">Question:</string>
     <string name="answer_">Answer:</string>
+    <string name="fill_in_the_blank">Fill In the blank</string>
+    <string name="enter_answer">Enter Answer</string>
+    <string name="true_false">True False</string>
+    <string name="choose_one">Choose one</string>
+    <string name="short_answer">Short answer</string>
+    <string name="enter_short_answer">Enter short answer</string>
+    <string name="easy_answer">Easy Answer</string>
+    <string name="enter_the_essay">Enter the essay</string>
+    <string name="multiple_answers">Multiple answers</string>
+    <string name="choose_single_or_multiple_options">Choose single/multiple choices</string>
 
 </resources>
