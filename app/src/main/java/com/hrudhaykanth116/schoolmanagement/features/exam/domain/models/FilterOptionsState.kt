@@ -5,11 +5,11 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class FilterOptionsState(
-    val filterOptionsList: List<FilterOption>? = null,
+    val filterOptionsListState: List<FilterOptionState>? = null,
 ): Parcelable
 
 @Parcelize
-data class FilterOption(
+data class FilterOptionState(
     val name: String,
     val count: Int,
     // TODO: Maintaining var for now. make val

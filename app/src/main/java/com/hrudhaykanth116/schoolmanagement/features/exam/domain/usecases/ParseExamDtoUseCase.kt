@@ -59,14 +59,14 @@ class ParseExamDtoUseCase @Inject constructor(
             }
         }
 
-        val filterOptionsList: List<FilterOption> = (subjectWiseGroup + answerTypeWiseGroup).map {
-            FilterOption(
+        val filterOptionsListStates: List<FilterOptionState> = (subjectWiseGroup + answerTypeWiseGroup).map {
+            FilterOptionState(
                 it.key, it.value.count()
             )
         }
 
         val filterOptionsState = FilterOptionsState(
-            filterOptionsList
+            filterOptionsListStates
         )
 
 

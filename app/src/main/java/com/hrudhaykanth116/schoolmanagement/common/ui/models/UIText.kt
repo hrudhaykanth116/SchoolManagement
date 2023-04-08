@@ -1,4 +1,4 @@
-package com.hrudhaykanth116.schoolmanagement.common.data.models
+package com.hrudhaykanth116.schoolmanagement.common.ui.models
 
 import android.content.Context
 

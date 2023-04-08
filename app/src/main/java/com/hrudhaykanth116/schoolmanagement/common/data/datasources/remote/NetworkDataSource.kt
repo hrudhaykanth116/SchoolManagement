@@ -2,7 +2,7 @@ package com.hrudhaykanth116.schoolmanagement.common.data.datasources.remote
 
 import android.util.Log
 import com.hrudhaykanth116.schoolmanagement.common.data.models.DataResult
-import com.hrudhaykanth116.schoolmanagement.common.data.models.UIText
+import com.hrudhaykanth116.schoolmanagement.common.ui.models.UIText
 import com.hrudhaykanth116.schoolmanagement.common.utils.network.OnlineTracker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

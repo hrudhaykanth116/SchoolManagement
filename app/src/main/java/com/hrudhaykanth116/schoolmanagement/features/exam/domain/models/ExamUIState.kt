@@ -1,6 +1,6 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.models
 
-import com.hrudhaykanth116.schoolmanagement.common.data.models.UIText
+import com.hrudhaykanth116.schoolmanagement.common.ui.models.UIText
 
 // TODO: Use Loading, Error, Success states for better state management
 data class ExamUIState(

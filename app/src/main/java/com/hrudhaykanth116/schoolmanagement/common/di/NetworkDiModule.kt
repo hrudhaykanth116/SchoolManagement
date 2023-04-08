@@ -28,5 +28,17 @@ object NetworkDiModule {
             // .addTimeOut()
             .build()
 
+    @Singleton
+    @Provides
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        BASE_URL: String,
+        moshi: Moshi,
+    ): Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .client(okHttpClient)
+        .build()
+
 
 }

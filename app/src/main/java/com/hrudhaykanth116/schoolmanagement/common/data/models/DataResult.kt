@@ -1,5 +1,7 @@
 package com.hrudhaykanth116.schoolmanagement.common.data.models
 
+import com.hrudhaykanth116.schoolmanagement.common.ui.models.UIText
+
 sealed class DataResult<out T> {
     data class Success<out T>(val data: T) : DataResult<T>()
     data class Error(

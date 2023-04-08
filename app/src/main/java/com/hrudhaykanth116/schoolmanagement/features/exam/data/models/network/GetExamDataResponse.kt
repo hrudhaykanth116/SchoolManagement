@@ -1,7 +1,6 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network
 
 import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
 
 data class GetExamDataResponse(
     @Json(name = "ErrorMessage")

@@ -2,25 +2,25 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.ui.adapters
 
 import androidx.recyclerview.widget.RecyclerView
 import com.hrudhaykanth116.schoolmanagement.databinding.LayoutFilterOptionBinding
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOption
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOptionState
 
 class FilterOptionViewHolder(
     private val binding: LayoutFilterOptionBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(
-        filterOption: FilterOption,
+        filterOptionState: FilterOptionState,
         eventListener: (FilterOptionsAdapter.ItemEvent) -> Unit
     ) {
 
         binding.checkbox.setOnCheckedChangeListener { _, isChecked ->
 
-            filterOption.isChecked = isChecked
+            filterOptionState.isChecked = isChecked
 
-            eventListener.invoke(FilterOptionsAdapter.ItemEvent.CheckStateChanged(filterOption))
+            eventListener.invoke(FilterOptionsAdapter.ItemEvent.CheckStateChanged(filterOptionState))
         }
-        binding.label.text = "${filterOption.name} (${filterOption.count})"
-        binding.checkbox.isChecked = filterOption.isChecked
+        binding.label.text = "${filterOptionState.name} (${filterOptionState.count})"
+        binding.checkbox.isChecked = filterOptionState.isChecked
 
     }
 

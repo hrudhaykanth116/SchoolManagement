@@ -62,7 +62,7 @@ class QuestionsViewModel @Inject constructor(
     }
 
     private fun performFilter(newFilterOptionState: FilterOptionsState?) {
-        val filteredOptions = newFilterOptionState?.filterOptionsList?.filter {
+        val filteredOptions = newFilterOptionState?.filterOptionsListState?.filter {
             it.isChecked
         } ?: listOf()
 

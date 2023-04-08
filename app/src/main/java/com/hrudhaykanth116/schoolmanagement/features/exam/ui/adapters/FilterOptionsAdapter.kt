@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.hrudhaykanth116.schoolmanagement.databinding.LayoutFilterOptionBinding
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOption
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOptionState
 
 class FilterOptionsAdapter(
     private val eventListener: (ItemEvent) -> Unit
-) : ListAdapter<FilterOption, FilterOptionViewHolder>(
+) : ListAdapter<FilterOptionState, FilterOptionViewHolder>(
     DIFF_CALL_BACK
 ) {
 
@@ -29,17 +29,17 @@ class FilterOptionsAdapter(
 
     companion object {
 
-        private val DIFF_CALL_BACK = object : DiffUtil.ItemCallback<FilterOption>() {
+        private val DIFF_CALL_BACK = object : DiffUtil.ItemCallback<FilterOptionState>() {
             override fun areItemsTheSame(
-                oldItem: FilterOption,
-                newItem: FilterOption
+                oldItem: FilterOptionState,
+                newItem: FilterOptionState
             ): Boolean {
                 return oldItem.name == newItem.name
             }
 
             override fun areContentsTheSame(
-                oldItem: FilterOption,
-                newItem: FilterOption
+                oldItem: FilterOptionState,
+                newItem: FilterOptionState
             ): Boolean {
                 return oldItem == newItem
             }
@@ -48,7 +48,7 @@ class FilterOptionsAdapter(
     }
 
     sealed interface ItemEvent{
-        data class CheckStateChanged(val filterOption: FilterOption): ItemEvent
+        data class CheckStateChanged(val filterOptionState: FilterOptionState): ItemEvent
     }
 
 }

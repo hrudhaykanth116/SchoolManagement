@@ -1,11 +1,10 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 
 import com.hrudhaykanth116.schoolmanagement.common.data.models.DataResult
-import com.hrudhaykanth116.schoolmanagement.common.data.models.UIText
+import com.hrudhaykanth116.schoolmanagement.common.ui.models.UIText
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.repository.exam.IExamRepository
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.ExamUIState
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionUIState
 import javax.inject.Inject
 
 class GetExamUIStateUseCase @Inject constructor(

@@ -1,7 +1,7 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 
 import com.hrudhaykanth116.schoolmanagement.R
-import com.hrudhaykanth116.schoolmanagement.common.data.models.UIText
+import com.hrudhaykanth116.schoolmanagement.common.ui.models.UIText
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionUIState

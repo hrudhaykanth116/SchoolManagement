@@ -3,6 +3,8 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.domain.models
 sealed class AnswerUIState(
     open val questionId: String,
 ) {
+
+    // TODO: Extract/reuse strings.Return UIText instead.
     fun getFilterName(): String {
         return when (this) {
             is FillInTheBlank -> "Fill in the blanks"

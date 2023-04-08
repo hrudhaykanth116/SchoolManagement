@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.hrudhaykanth116.schoolmanagement.databinding.FragmentFilterOptionsBinding
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOption
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOptionState
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.adapters.FilterOptionsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,14 +23,14 @@ class FilterBottomSheetFragment: BottomSheetDialogFragment() {
         args.filterOptionState
     }
 
-    private var resultFilterOptions: List<FilterOption> = listOf()
+    private var resultFilterOptionStates: List<FilterOptionState> = listOf()
 
     private val adapter by lazy {
         FilterOptionsAdapter{ event: FilterOptionsAdapter.ItemEvent ->
 
             when (event) {
                 is FilterOptionsAdapter.ItemEvent.CheckStateChanged -> {
-                    resultFilterOptions.find { event.filterOption == it }?.isChecked = event.filterOption.isChecked
+                    resultFilterOptionStates.find { event.filterOptionState == it }?.isChecked = event.filterOptionState.isChecked
                 }
             }
         }
@@ -55,33 +55,33 @@ class FilterBottomSheetFragment: BottomSheetDialogFragment() {
 
         // TODO: Handle outside clicked event
 
-        resultFilterOptions = filterOptionState.filterOptionsList ?: listOf()
+        resultFilterOptionStates = filterOptionState.filterOptionsListState ?: listOf()
 
         binding.optionsList.adapter = adapter
 
         adapter.submitList(
-            filterOptionState.filterOptionsList
+            filterOptionState.filterOptionsListState
         )
 
         binding.clearButton.setOnClickListener {
 
-            val clearedList = ArrayList(resultFilterOptions.map {
+            val clearedList = ArrayList(resultFilterOptionStates.map {
                 it.copy(
                     isChecked = false
                 )
             })
 
-            resultFilterOptions = clearedList
+            resultFilterOptionStates = clearedList
 
             adapter.submitList(
-                resultFilterOptions
+                resultFilterOptionStates
             )
         }
 
         binding.applyButton.setOnClickListener {
 
             val newFilterState = filterOptionState.copy(
-                filterOptionsList = resultFilterOptions
+                filterOptionsListState = resultFilterOptionStates
             )
 
             findNavController().previousBackStackEntry?.savedStateHandle?.set(KEY_FILTER_STATE, newFilterState)
