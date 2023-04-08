@@ -2,6 +2,7 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.ui.screens.questions
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
@@ -72,8 +73,22 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
     }
 
     private fun setClickListeners() {
+
+        binding.nextButton.setOnClickListener {
+            sendEvent(Event.Next)
+        }
+
         binding.filterIcon.setOnClickListener {
             sendEvent(Event.FilterIconClicked)
+        }
+
+        binding.clearTV.setOnClickListener {
+            sendEvent(Event.Clear)
+        }
+
+        binding.retryButton.setOnClickListener {
+            // sendEvent(Event.Retry)
+            Toast.makeText(requireContext(), "Not implemented. Assuming only happy path. Check Internet and reopen.", Toast.LENGTH_LONG).show()
         }
 
     }
@@ -87,6 +102,13 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
         // TODO: Handle empty questions/error/loading case using loading, loaded, error states
 
         binding.progressBar.isVisible = state.isLoading
+        binding.allViews.isVisible = !state.isLoading && state.errorMessage == null
+        binding.errorView.isVisible = state.errorMessage != null
+        binding.retryButton.isVisible = state.errorMessage != null
+
+        if(state.errorMessage != null){
+            binding.errorView.text = state.errorMessage.getText(requireContext())
+        }
 
         if (!state.isLoading) {
 
@@ -125,7 +147,7 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
                 QuestionContainer(
                     answersInitialUIState = answerUIState,
                     onNextClicked = {
-                        sendEvent(Event.Next)
+                        // sendEvent(Event.Next)
                     },
                     onAnswered = { newAnswerUIState: AnswerUIState ->
                         sendEvent(Event.AnswerStateChanged(newAnswerUIState))

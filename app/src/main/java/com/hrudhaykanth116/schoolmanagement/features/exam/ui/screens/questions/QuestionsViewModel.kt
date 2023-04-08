@@ -58,6 +58,9 @@ class QuestionsViewModel @Inject constructor(
             is Event.Filter -> {
                 performFilter(event.filterOptionsState)
             }
+            Event.Clear -> {
+                // TODO: Implement clear functionality
+            }
         }
     }
 

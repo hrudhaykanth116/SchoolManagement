@@ -1,4 +1,4 @@
-package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components
+package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.common
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -8,7 +8,7 @@ import com.qdot.mathrendererlib.MathRenderView
 import com.qdot.mathrendererlib.TextAlign
 
 @Composable
-fun MyMathComposable(
+fun MathFormulaUI(
     modifier: Modifier,
     text: String
 ) {

@@ -17,4 +17,10 @@
     <string name="multiple_answers">Multiple answers</string>
     <string name="choose_single_or_multiple_options">Choose single/multiple choices</string>
 
+
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="clear">Clear</string>
+    <string name="retry">Retry</string>
+
 </resources>

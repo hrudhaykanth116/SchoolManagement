@@ -1,4 +1,4 @@
-package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components
+package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.answertype
 
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable

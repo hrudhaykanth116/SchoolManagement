@@ -1,4 +1,4 @@
-package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components
+package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.common
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,8 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+// TODO: Figure out appropriate name for this ui
 @Composable
-fun AnswerOptionsView(
+fun AnswerOptionUI(
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
     index: String,
@@ -50,7 +51,7 @@ fun AnswerOptionsView(
             color = Color.White,
         )
         Spacer(modifier = Modifier.width(16.dp))
-        MyMathComposable(modifier, content)
+        MathFormulaUI(modifier, content)
     }
 
 }

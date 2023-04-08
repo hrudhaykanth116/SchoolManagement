@@ -23,6 +23,8 @@ class FilterBottomSheetFragment: BottomSheetDialogFragment() {
         args.filterOptionState
     }
 
+    // TODO: This list will be maintained to return selected filters when clicked on apply
+    //  and actual filter state is not disturbed.
     private var resultFilterOptionStates: List<FilterOptionState> = listOf()
 
     private val adapter by lazy {
@@ -30,7 +32,9 @@ class FilterBottomSheetFragment: BottomSheetDialogFragment() {
 
             when (event) {
                 is FilterOptionsAdapter.ItemEvent.CheckStateChanged -> {
-                    resultFilterOptionStates.find { event.filterOptionState == it }?.isChecked = event.filterOptionState.isChecked
+                    resultFilterOptionStates.find {
+                        event.filterOptionState == it
+                    }?.isChecked = event.filterOptionState.isChecked
                 }
             }
         }
@@ -93,8 +97,6 @@ class FilterBottomSheetFragment: BottomSheetDialogFragment() {
     companion object{
         private const val TAG = "FilterBottomSheetFragme"
         const val KEY_FILTER_STATE = "key_filter_state"
-
-
     }
 
 }

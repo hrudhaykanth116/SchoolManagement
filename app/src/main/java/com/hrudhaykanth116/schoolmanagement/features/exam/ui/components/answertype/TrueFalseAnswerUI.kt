@@ -1,4 +1,4 @@
-package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components
+package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.answertype
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.RadioButton
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
 
 @Composable
-fun TrueFalseOptions(
+fun TrueFalseOptionsUI(
     uiState: AnswerUIState.TrueFalse,
     onAnswered: (AnswerUIState) -> Unit
 ) {

@@ -48,6 +48,8 @@ class ParseExamDtoUseCase @Inject constructor(
                 it.answerUIState.getFilterName()
             }
         ) {
+            // TODO: Revisit logic. Also Use constants.
+
             when (it.answerUIState) {
                 is AnswerUIState.FillInTheBlank -> "Fill in the blanks"
                 is AnswerUIState.MultipleAnswers -> "Multiple answers"
