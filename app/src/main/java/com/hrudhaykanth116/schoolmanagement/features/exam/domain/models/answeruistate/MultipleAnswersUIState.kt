@@ -4,6 +4,7 @@ data class MultipleAnswersUIState(
     val optionsList: List<OptionUIState>,
     override val questionId: String,
 ) : AnswerUIState(questionId) {
+
     data class OptionUIState(
         val index: String,
         val content: String,
@@ -11,6 +12,7 @@ data class MultipleAnswersUIState(
     )
 
     override val filterName: String = "Multiple answers"
+
     override fun clear(): AnswerUIState {
         val newOptionsList = optionsList.map {
             it.copy(

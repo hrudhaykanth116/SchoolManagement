@@ -27,35 +27,41 @@ fun MultipleAnswersUI(
                 index = optionUIState.index,
                 isSelected = optionUIState.isSelected,
                 content = optionUIState.content,
-            ) {
-
-
-                // val currentOptionState = optionState.optionsList.find { it == clickedOption }
-                // val newOptionState = currentOptionState?.copy(
-                //     isSelected = !currentOptionState.isSelected
-                // )
-
-                val newOptionsState = currentOptionsList.map {
-                    if (it == optionUIState) {
-                        it.copy(
-                            isSelected = !it.isSelected
-                        )
-                    } else {
-                        it.copy(
-                            isSelected = false
-                        )
-                    }
-                }
-
-                val newAnswerUIState = optionState.copy(
-                    optionsList = newOptionsState
+                onClicked = onOptionClicked(
+                    currentOptionsList,
+                    optionUIState,
+                    optionState,
+                    onStateChanged
                 )
-
-                onStateChanged(
-                    newAnswerUIState
-                )
-            }
+            )
             Spacer(modifier = Modifier.height(8.dp))
         }
     }
+}
+
+@Composable
+private fun onOptionClicked(
+    currentOptionsList: List<MultipleAnswersUIState.OptionUIState>,
+    optionUIState: MultipleAnswersUIState.OptionUIState,
+    optionState: MultipleAnswersUIState,
+    onStateChanged: (MultipleAnswersUIState) -> Unit
+): () -> Unit = {
+    val newOptionsState =
+        currentOptionsList.map { optionUIState1: MultipleAnswersUIState.OptionUIState ->
+            if (optionUIState1 == optionUIState) {
+                optionUIState1.copy(
+                    isSelected = !optionUIState1.isSelected
+                )
+            } else {
+                optionUIState1
+            }
+        }
+
+    val newAnswerUIState = optionState.copy(
+        optionsList = newOptionsState
+    )
+
+    onStateChanged(
+        newAnswerUIState
+    )
 }
