@@ -42,18 +42,18 @@ fun MultipleAnswersUI(
 @Composable
 private fun onOptionClicked(
     currentOptionsList: List<MultipleAnswersUIState.OptionUIState>,
-    optionUIState: MultipleAnswersUIState.OptionUIState,
+    clickedOption: MultipleAnswersUIState.OptionUIState,
     optionState: MultipleAnswersUIState,
     onStateChanged: (MultipleAnswersUIState) -> Unit
 ): () -> Unit = {
     val newOptionsState =
-        currentOptionsList.map { optionUIState1: MultipleAnswersUIState.OptionUIState ->
-            if (optionUIState1 == optionUIState) {
-                optionUIState1.copy(
-                    isSelected = !optionUIState1.isSelected
+        currentOptionsList.map { optionUIState: MultipleAnswersUIState.OptionUIState ->
+            if (optionUIState == clickedOption) {
+                optionUIState.copy(
+                    isSelected = !optionUIState.isSelected
                 )
             } else {
-                optionUIState1
+                optionUIState
             }
         }
 

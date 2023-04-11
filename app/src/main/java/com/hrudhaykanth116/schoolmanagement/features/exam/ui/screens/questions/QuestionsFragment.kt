@@ -59,8 +59,6 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
                         sendEvent(Event.Filter(it))
                     }
                 }
-
-
             }
         }
         navBackStackEntry.getLifecycle().addObserver(observer)
@@ -112,9 +110,7 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
 
         if(state.errorMessage != null){
             binding.errorView.text = state.errorMessage.getText(requireContext())
-        }
-
-        if (!state.isLoading) {
+        }else if (!state.isLoading) {
 
             // TODO: Implement recycler view
             val questionNumbers = 1..state.questionsToDisplayList.size
@@ -144,15 +140,8 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
 
                 val answerUIState: AnswerUIState = state.value.currentQuestionUIState.answerUIState
 
-                // var answerUIState: AnswerUIState by remember {
-                //     mutableStateOf(state.currentQuestionUIState.answerUIState)
-                // }
-
                 QuestionContainer(
                     answersInitialUIState = answerUIState,
-                    onNextClicked = {
-                        // sendEvent(Event.Next)
-                    },
                     onAnswered = { newAnswerUIState: AnswerUIState ->
                         sendEvent(Event.AnswerStateChanged(newAnswerUIState))
                     }

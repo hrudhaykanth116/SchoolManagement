@@ -108,11 +108,6 @@ class QuestionsViewModel @Inject constructor(
             answerUIState = newAnswerUIState
         )
 
-        // val newQuestionsList = state.filteredQuestionList
-        // newQuestionsList.find {
-        //     it.questionNumber == currentQuestionUIState?.questionNumber
-        // }
-
         setState {
             copy(
                 currentQuestionUIState = newQuestionUIState,

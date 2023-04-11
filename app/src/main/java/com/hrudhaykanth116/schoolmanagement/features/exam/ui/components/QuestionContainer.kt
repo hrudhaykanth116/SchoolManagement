@@ -10,7 +10,6 @@ import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answerui
 fun QuestionContainer(
     modifier: Modifier = Modifier,
     answersInitialUIState: AnswerUIState,
-    onNextClicked: () -> Unit = {},
     onAnswered: (AnswerUIState) -> Unit = {}
 ) {
 
@@ -24,14 +23,6 @@ fun QuestionContainer(
                 onAnswered = onAnswered
             )
         }
-        // Button(
-        //     modifier = Modifier.align(Alignment.End),
-        //     onClick = {
-        //         onNextClicked()
-        //     }
-        // ) {
-        //     Text(text = "Next")
-        // }
     }
 
 }
