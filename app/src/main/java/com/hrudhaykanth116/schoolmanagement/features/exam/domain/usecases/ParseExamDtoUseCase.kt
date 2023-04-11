@@ -2,6 +2,7 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.*
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.*
 import javax.inject.Inject
 
 class ParseExamDtoUseCase @Inject constructor(
@@ -45,19 +46,19 @@ class ParseExamDtoUseCase @Inject constructor(
 
         val answerTypeWiseGroup: Map<String, List<String>> = questionsUIState.groupBy(
             {
-                it.answerUIState.getFilterName()
+                it.answerUIState.filterName
             }
         ) {
             // TODO: Revisit logic. Also Use constants.
 
             when (it.answerUIState) {
-                is AnswerUIState.FillInTheBlank -> "Fill in the blanks"
-                is AnswerUIState.MultipleAnswers -> "Multiple answers"
-                is AnswerUIState.MultipleChoicesUIState -> "Multiple choices"
-                is AnswerUIState.ShortAnswer -> "Short answer"
-                is AnswerUIState.TrueFalse -> "True False"
-                is AnswerUIState.Unknown -> "Unknown"
-                is AnswerUIState.Easy -> "Easy"
+                is FillInTheBlankAnswerUIState -> "Fill in the blanks"
+                is MultipleAnswersUIState -> "Multiple answers"
+                is MultipleChoicesAnswerUIState -> "Multiple choices"
+                is ShortAnswerUIState -> "Short answer"
+                is TrueFalseAnswerUIState -> "True False"
+                is UnknownAnswerUIState -> "Unknown"
+                is EasyAnswerUIState -> "Easy"
             }
         }
 

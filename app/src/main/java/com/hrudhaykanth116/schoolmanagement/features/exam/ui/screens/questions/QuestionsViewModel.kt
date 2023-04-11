@@ -2,7 +2,7 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.ui.screens.questions
 
 import androidx.lifecycle.viewModelScope
 import com.hrudhaykanth116.schoolmanagement.common.udf.UDFViewModel
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.AnswerUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOptionsState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.getQuestionUIState
@@ -42,8 +42,13 @@ class QuestionsViewModel @Inject constructor(
 
             }
             Event.Prev -> {
-                // val prevQuestionNumber = state.currentQuestionNumber - 1
-                // setQuestionNumber(prevQuestionNumber, event.newAnswerUIState)
+                val prevQuestionNumber = state.currentQuestionNumber - 1
+
+                if(prevQuestionNumber > 0){
+                    setQuestionNumber(prevQuestionNumber)
+                }else{
+                    // TODO: Hide previous button when on first question number
+                }
             }
             is Event.AnswerStateChanged -> {
                 onAnswerStateChanged(event.answerUIState)
@@ -59,7 +64,9 @@ class QuestionsViewModel @Inject constructor(
                 performFilter(event.filterOptionsState)
             }
             Event.Clear -> {
-                // TODO: Implement clear functionality
+                onAnswerStateChanged(
+                    state.currentQuestionUIState.answerUIState.clear()
+                )
             }
         }
     }
@@ -75,7 +82,7 @@ class QuestionsViewModel @Inject constructor(
             state.questionsList.filter { questionUIState ->
                 filteredOptions.any { filteredOption ->
                     questionUIState.subject == filteredOption.name
-                            || questionUIState.answerUIState.getFilterName() == filteredOption.name
+                            || questionUIState.answerUIState.filterName == filteredOption.name
                 }
             }
         }

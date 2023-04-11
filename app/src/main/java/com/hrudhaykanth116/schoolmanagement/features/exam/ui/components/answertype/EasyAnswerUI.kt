@@ -2,11 +2,12 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.answert
 
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.EasyAnswerUIState
 
 @Composable
 fun EasyAnswerView(
-    optionState: AnswerUIState.Easy,
+    optionState: EasyAnswerUIState,
     onAnswered: (AnswerUIState) -> Unit
 ) {
     OutlinedTextField(value = optionState.option.description ?: "", onValueChange = {

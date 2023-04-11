@@ -2,7 +2,7 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.*
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.answertype.EasyAnswerView
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.answertype.FillInTheBlankAnswerView
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.answertype.MultipleAnswersUI
@@ -17,31 +17,31 @@ fun QuestionOptionsContainer(
 ) {
 
     when (optionState) {
-        is AnswerUIState.MultipleChoicesUIState -> {
+        is MultipleChoicesAnswerUIState -> {
             MultipleChoiceAnswers(
                 optionState = optionState,
                 onStateChanged = onAnswered
             )
         }
-        is AnswerUIState.MultipleAnswers -> {
+        is MultipleAnswersUIState -> {
             MultipleAnswersUI(
                 optionState = optionState,
                 onStateChanged = onAnswered
             )
         }
-        is AnswerUIState.FillInTheBlank -> {
+        is FillInTheBlankAnswerUIState -> {
             FillInTheBlankAnswerView(optionState, onAnswered)
         }
-        is AnswerUIState.ShortAnswer -> {
+        is ShortAnswerUIState -> {
             ShortAnswerOptionsUI(optionState, onAnswered)
         }
-        is AnswerUIState.TrueFalse -> {
+        is TrueFalseAnswerUIState -> {
             TrueFalseOptionsUI(optionState, onAnswered)
         }
-        is AnswerUIState.Unknown -> {
+        is UnknownAnswerUIState -> {
             Text(text = "Answer type is unknown.")
         }
-        is AnswerUIState.Easy -> {
+        is EasyAnswerUIState -> {
             EasyAnswerView(optionState, onAnswered)
         }
     }

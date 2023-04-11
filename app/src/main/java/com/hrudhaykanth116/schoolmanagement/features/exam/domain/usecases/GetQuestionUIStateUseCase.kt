@@ -3,8 +3,8 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases
 import com.hrudhaykanth116.schoolmanagement.R
 import com.hrudhaykanth116.schoolmanagement.common.ui.models.UIText
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.QuestionUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.UnknownAnswerUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases.answerdataparsers.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -91,7 +91,7 @@ class GetQuestionUIStateUseCase @Inject constructor(
             }
             else -> {
                 QuestionUIState(
-                    answerUIState = AnswerUIState.Unknown(questionDetail.questionId.toString()),
+                    answerUIState = UnknownAnswerUIState(questionDetail.questionId.toString()),
                     questionTitle = UIText.StringRes(R.string.question_),
                     answerTitle = UIText.StringRes(R.string.answer_),
                 )

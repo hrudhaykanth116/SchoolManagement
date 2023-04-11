@@ -1,7 +1,7 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases.answerdataparsers
 
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.FillInTheBlankAnswerUIState
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,10 +12,10 @@ class ParseFillInTheBlackData @Inject constructor() {
      * Extracts options list from given [GetExamDataResponse.Result.QuestionDetail] that can
      * be rendered on the UI
      */
-    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): AnswerUIState.FillInTheBlank {
-        return AnswerUIState.FillInTheBlank(
+    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): FillInTheBlankAnswerUIState {
+        return FillInTheBlankAnswerUIState(
             questionId = questionDetail.questionId?.toString()!!,
-            option = AnswerUIState.FillInTheBlank.Option(
+            option = FillInTheBlankAnswerUIState.Option(
                 id = questionDetail.questionOptions?.getOrNull(0)?.optionId!!
             )
         )

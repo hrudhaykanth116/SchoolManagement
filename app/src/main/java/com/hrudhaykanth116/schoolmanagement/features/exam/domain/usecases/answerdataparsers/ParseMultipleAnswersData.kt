@@ -1,7 +1,8 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases.answerdataparsers
 
+import com.hrudhaykanth116.schoolmanagement.common.utils.integer.toAlphabet
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.MultipleAnswersUIState
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,8 +13,8 @@ class ParseMultipleAnswersData @Inject constructor() {
      * Extracts options list from given [GetExamDataResponse.Result.QuestionDetail] that can
      * be rendered on the UI
      */
-    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): AnswerUIState.MultipleAnswers {
-        val optionsList = mutableListOf<AnswerUIState.MultipleAnswers.OptionUIState>()
+    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): MultipleAnswersUIState {
+        val optionsList = mutableListOf<MultipleAnswersUIState.OptionUIState>()
 
         questionDetail.questionOptions?.forEachIndexed { index, questionOption ->
 
@@ -24,17 +25,17 @@ class ParseMultipleAnswersData @Inject constructor() {
                 "\\[${questionOption.optionFormula}\\]"
             }
 
-            val optionUIState: AnswerUIState.MultipleAnswers.OptionUIState =
-                AnswerUIState.MultipleAnswers.OptionUIState(
+            val optionUIState: MultipleAnswersUIState.OptionUIState =
+                MultipleAnswersUIState.OptionUIState(
                     // TODO: need to use Alphabets A, B, C, D
-                    "${index + 1}", answerOption ?: "",
+                    "${(index + 1).toAlphabet()}", answerOption ?: "",
                     isSelected = false,
                 )
 
             optionsList.add(optionUIState)
         }
 
-        return AnswerUIState.MultipleAnswers(optionsList, questionDetail.questionId?.toString()!!)
+        return MultipleAnswersUIState(optionsList, questionDetail.questionId?.toString()!!)
     }
 
 }

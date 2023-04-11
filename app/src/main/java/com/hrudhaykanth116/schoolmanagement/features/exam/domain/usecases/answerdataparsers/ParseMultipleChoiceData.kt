@@ -1,7 +1,8 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases.answerdataparsers
 
+import com.hrudhaykanth116.schoolmanagement.common.utils.integer.toAlphabet
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.MultipleChoicesAnswerUIState
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,8 +13,8 @@ class ParseMultipleChoiceData @Inject constructor() {
      * Extracts options list from given [GetExamDataResponse.Result.QuestionDetail] that can
      * be rendered on the UI
      */
-    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): AnswerUIState.MultipleChoicesUIState {
-        val optionsList = mutableListOf<AnswerUIState.MultipleChoicesUIState.OptionUIState>()
+    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): MultipleChoicesAnswerUIState {
+        val optionsList = mutableListOf<MultipleChoicesAnswerUIState.OptionUIState>()
 
         questionDetail.questionOptions?.forEachIndexed { index, questionOption ->
 
@@ -24,17 +25,17 @@ class ParseMultipleChoiceData @Inject constructor() {
                 "\\[${questionOption.optionFormula}\\]"
             }
 
-            val optionUIState: AnswerUIState.MultipleChoicesUIState.OptionUIState =
-                AnswerUIState.MultipleChoicesUIState.OptionUIState(
+            val optionUIState: MultipleChoicesAnswerUIState.OptionUIState =
+                MultipleChoicesAnswerUIState.OptionUIState(
                     // TODO: need to use Alphabets A, B, C, D
-                    "${index + 1}", answerOption ?: "",
+                    "${(index + 1).toAlphabet()}", answerOption ?: "",
                     isSelected = false,
                 )
 
             optionsList.add(optionUIState)
         }
 
-        return AnswerUIState.MultipleChoicesUIState(optionsList, questionDetail.questionId?.toString()!!)
+        return MultipleChoicesAnswerUIState(optionsList, questionDetail.questionId?.toString()!!)
     }
 
 }

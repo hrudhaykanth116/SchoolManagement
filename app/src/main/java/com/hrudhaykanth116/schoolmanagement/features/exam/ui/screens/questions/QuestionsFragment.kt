@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.hrudhaykanth116.schoolmanagement.R
 import androidx.compose.runtime.*
 import com.hrudhaykanth116.schoolmanagement.common.udf.UDFFragment
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.AnswerUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.FilterOptionsState
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.bottomsheet.FilterBottomSheetFragment.Companion.KEY_FILTER_STATE
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.QuestionContainer
@@ -76,6 +76,10 @@ class QuestionsFragment : UDFFragment<State, Event, Effect, Binding>(
 
         binding.nextButton.setOnClickListener {
             sendEvent(Event.Next)
+        }
+
+        binding.prevButton.setOnClickListener {
+            sendEvent(Event.Prev)
         }
 
         binding.filterIcon.setOnClickListener {

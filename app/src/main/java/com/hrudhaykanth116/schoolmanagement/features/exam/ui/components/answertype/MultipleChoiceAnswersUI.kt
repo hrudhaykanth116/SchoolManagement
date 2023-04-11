@@ -6,22 +6,22 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.MultipleChoicesAnswerUIState
 import com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.common.AnswerOptionUI
 
 
 @Composable
 fun MultipleChoiceAnswers(
     modifier: Modifier = Modifier,
-    optionState: AnswerUIState.MultipleChoicesUIState,
-    onStateChanged: (AnswerUIState.MultipleChoicesUIState) -> Unit
+    optionState: MultipleChoicesAnswerUIState,
+    onStateChanged: (MultipleChoicesAnswerUIState) -> Unit
 ) {
 
 
     val currentOptionsList = optionState.optionsList
 
     Column() {
-        currentOptionsList.forEach { optionUIState: AnswerUIState.MultipleChoicesUIState.OptionUIState ->
+        currentOptionsList.forEach { optionUIState: MultipleChoicesAnswerUIState.OptionUIState ->
             AnswerOptionUI(
                 modifier = modifier,
                 index = optionUIState.index,

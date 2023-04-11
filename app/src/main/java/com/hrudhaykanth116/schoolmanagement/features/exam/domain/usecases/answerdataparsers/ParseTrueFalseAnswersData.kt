@@ -1,7 +1,7 @@
 package com.hrudhaykanth116.schoolmanagement.features.exam.domain.usecases.answerdataparsers
 
 import com.hrudhaykanth116.schoolmanagement.features.exam.data.models.network.GetExamDataResponse
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.TrueFalseAnswerUIState
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -12,12 +12,12 @@ class ParseTrueFalseAnswersData @Inject constructor() {
      * Extracts options list from given [GetExamDataResponse.Result.QuestionDetail] that can
      * be rendered on the UI
      */
-    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): AnswerUIState.TrueFalse {
+    operator fun invoke(questionDetail: GetExamDataResponse.Result.QuestionDetail): TrueFalseAnswerUIState {
 
-        val optionsList: MutableList<AnswerUIState.TrueFalse.Option> = mutableListOf()
+        val optionsList: MutableList<TrueFalseAnswerUIState.Option> = mutableListOf()
 
         questionDetail.questionOptions?.forEach {
-            val option: AnswerUIState.TrueFalse.Option = AnswerUIState.TrueFalse.Option(
+            val option: TrueFalseAnswerUIState.Option = TrueFalseAnswerUIState.Option(
                 id = it?.optionId!!,
                 content = it.description ?: "NA",
                 isSelected = false,
@@ -25,7 +25,7 @@ class ParseTrueFalseAnswersData @Inject constructor() {
             optionsList.add(option)
         }
 
-        return AnswerUIState.TrueFalse(
+        return TrueFalseAnswerUIState(
             questionId = questionDetail.questionId?.toString()!!,
             optionList = optionsList
         )

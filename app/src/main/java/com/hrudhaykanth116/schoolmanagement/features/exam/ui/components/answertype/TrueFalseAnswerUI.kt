@@ -3,11 +3,12 @@ package com.hrudhaykanth116.schoolmanagement.features.exam.ui.components.answert
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.RadioButton
 import androidx.compose.runtime.Composable
-import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.AnswerUIState
+import com.hrudhaykanth116.schoolmanagement.features.exam.domain.models.answeruistate.TrueFalseAnswerUIState
 
 @Composable
 fun TrueFalseOptionsUI(
-    uiState: AnswerUIState.TrueFalse,
+    uiState: TrueFalseAnswerUIState,
     onAnswered: (AnswerUIState) -> Unit
 ) {
 
@@ -16,7 +17,7 @@ fun TrueFalseOptionsUI(
     Column(
 
     ) {
-        optionList.forEach { option: AnswerUIState.TrueFalse.Option ->
+        optionList.forEach { option: TrueFalseAnswerUIState.Option ->
             RadioButton(selected = option.isSelected, onClick = {
 
                 val newOptionsUIState = optionList.map {
